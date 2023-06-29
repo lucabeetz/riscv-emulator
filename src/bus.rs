@@ -1,3 +1,5 @@
+use crate::dram::*;
+
 pub const DRAM_BASE: u64 = 0x8000_0000;
 
 pub struct Bus {
@@ -5,6 +7,12 @@ pub struct Bus {
 }
 
 impl Bus {
+    pub fn new(code: Vec<u8>) -> Self {
+        Self {
+            dram: Dram::new(code),
+        }
+    }
+
     pub fn load(&self, addr: u64, size: u64) -> Result<u64, ()> {
         if DRAM_BASE <= addr {
             return self.dram.load(addr, size);

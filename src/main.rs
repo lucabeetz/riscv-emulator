@@ -22,7 +22,6 @@ fn main() -> io::Result<()> {
 
     let mut cpu = Cpu::new(code);
 
-
     loop {
         // 1. Fetch
         let instruction = match cpu.fetch() {
@@ -35,7 +34,7 @@ fn main() -> io::Result<()> {
 
         // 3. Decode
         // 4. Execute
-        match cpu.execute(instruction) {
+        match cpu.execute(instruction as u32) {
             Ok(_) => (),
             Err(_) => break,
         }
@@ -44,6 +43,8 @@ fn main() -> io::Result<()> {
             break;
         }
     }
+
+    cpu.dump_registers();
 
     Ok(())
 }
